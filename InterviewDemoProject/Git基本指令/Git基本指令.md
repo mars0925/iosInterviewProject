@@ -1,7 +1,7 @@
 # Git 基本指令與 Git Merge 操作指南
 
 ## 一、Git 基本配置指令 main
-
+this is form main
 ### 1.1 設定使用者資訊
 ```bash
 # 設定全域使用者名稱
