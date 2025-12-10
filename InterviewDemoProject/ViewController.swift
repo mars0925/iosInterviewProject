@@ -59,6 +59,18 @@ class ViewController: UIViewController {
         return button
     }()
     
+    /// Delegate 和 Protocol 演示按鈕
+    private let delegateProtocolDemoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("🎯 Delegate vs Protocol", for: .normal)
+        button.backgroundColor = .systemOrange
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.layer.cornerRadius = 8
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     /// 說明標籤
     private let instructionLabel: UILabel = {
         let label = UILabel()
@@ -158,6 +170,7 @@ class ViewController: UIViewController {
         view.addSubview(clearButton)
         view.addSubview(drawingDemoButton)
         view.addSubview(kvoDemoButton)
+        view.addSubview(delegateProtocolDemoButton)
         view.addSubview(instructionLabel)
         view.addSubview(buttonContainerView)
         
@@ -182,6 +195,9 @@ class ViewController: UIViewController {
         
         // KVO 演示按鈕事件
         kvoDemoButton.addTarget(self, action: #selector(showKVODemo), for: .touchUpInside)
+        
+        // Delegate 和 Protocol 演示按鈕事件
+        delegateProtocolDemoButton.addTarget(self, action: #selector(showDelegateProtocolDemo), for: .touchUpInside)
     }
     
     /// 設置自定義視圖層級結構
@@ -250,8 +266,14 @@ class ViewController: UIViewController {
             kvoDemoButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             kvoDemoButton.heightAnchor.constraint(equalToConstant: 40),
             
+            // Delegate 和 Protocol 演示按鈕
+            delegateProtocolDemoButton.topAnchor.constraint(equalTo: kvoDemoButton.bottomAnchor, constant: 8),
+            delegateProtocolDemoButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            delegateProtocolDemoButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            delegateProtocolDemoButton.heightAnchor.constraint(equalToConstant: 40),
+            
             // 圓形響應按鈕容器
-            buttonContainerView.topAnchor.constraint(equalTo: kvoDemoButton.bottomAnchor, constant: 10),
+            buttonContainerView.topAnchor.constraint(equalTo: delegateProtocolDemoButton.bottomAnchor, constant: 10),
             buttonContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             buttonContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             buttonContainerView.heightAnchor.constraint(equalToConstant: 170),
@@ -330,6 +352,13 @@ class ViewController: UIViewController {
     /// 顯示 KVO 演示
     @objc private func showKVODemo() {
         let demoVC = KVODemoViewController()
+        demoVC.modalPresentationStyle = .fullScreen
+        present(demoVC, animated: true)
+    }
+    
+    /// 顯示 Delegate 和 Protocol 演示
+    @objc private func showDelegateProtocolDemo() {
+        let demoVC = DelegateProtocolDemoViewController()
         demoVC.modalPresentationStyle = .fullScreen
         present(demoVC, animated: true)
     }
