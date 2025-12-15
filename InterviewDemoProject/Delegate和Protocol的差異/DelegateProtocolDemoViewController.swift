@@ -17,7 +17,7 @@ protocol Drawable {
 }
 
 /// Protocol 可以被不同類型採納，實現多態
-struct Circle: Drawable {
+struct DrawableCircle: Drawable {
     var color: UIColor
     var radius: CGFloat
     
@@ -26,7 +26,7 @@ struct Circle: Drawable {
     }
 }
 
-struct Rectangle: Drawable {
+struct DrawableRectangle: Drawable {
     var color: UIColor
     var width: CGFloat
     var height: CGFloat
@@ -284,9 +284,9 @@ class DelegateProtocolDemoViewController: UIViewController {
         
         // 創建不同類型的 Drawable 對象
         let shapes: [Drawable] = [
-            Circle(color: .red, radius: 50),
-            Rectangle(color: .blue, width: 100, height: 60),
-            Circle(color: .green, radius: 30)
+            DrawableCircle(color: .red, radius: 50),
+            DrawableRectangle(color: .blue, width: 100, height: 60),
+            DrawableCircle(color: .green, radius: 30)
         ]
         
         log("\n使用 Protocol 實現多態：")

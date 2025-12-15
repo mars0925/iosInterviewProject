@@ -10,9 +10,9 @@ import UIKit
 // MARK: - Demo Classes for ARC
 
 /// Person class to demonstrate reference counting
-class Person {
+class Person2 {
     let name: String
-    var apartment: Apartment?
+    var apartment: Apartment2?
     
     init(name: String) {
         self.name = name
@@ -25,9 +25,9 @@ class Person {
 }
 
 /// Apartment class demonstrating strong reference
-class Apartment {
+class Apartment2 {
     let unit: String
-    var tenant: Person?  // Strong reference - will cause retain cycle
+    var tenant: Person2?  // Strong reference - will cause retain cycle
     
     init(unit: String) {
         self.unit = unit
@@ -211,14 +211,14 @@ class ARCDemoViewController: UIViewController {
         appendResult("\n=== Strong Reference 示範 ===\n")
         
         // Create person with RC = 1
-        var person1: Person? = Person(name: "張三")
+        var person1: Person2? = Person2(name: "張三")
         
         // Add strong reference, RC = 2
-        var person2: Person? = person1
+        var person2: Person2? = person1
         appendResult("📌 person2 = person1，引用計數 = 2\n")
         
         // Add another strong reference, RC = 3
-        var person3: Person? = person1
+        var person3: Person2? = person1
         appendResult("📌 person3 = person1，引用計數 = 3\n")
         
         // Remove references one by one
@@ -239,8 +239,8 @@ class ARCDemoViewController: UIViewController {
         appendResult("\n=== Retain Cycle 問題示範 ===\n")
         
         // Create person and apartment
-        var person: Person? = Person(name: "李四")
-        var apartment: Apartment? = Apartment(unit: "5A")
+        var person: Person2? = Person2(name: "李四")
+        var apartment: Apartment2? = Apartment2(unit: "5A")
         
         // Create strong references between them
         person?.apartment = apartment

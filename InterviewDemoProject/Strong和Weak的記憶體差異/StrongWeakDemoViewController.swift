@@ -25,8 +25,8 @@ class DemoObject {
 
 // MARK: - Demo 2: Retain Cycle Problem (循環引用問題)
 
-/// Person 類別 - 持有 Apartment 的 strong 引用
-class Person {
+/// RetainCyclePerson 類別 - 持有 Apartment 的 strong 引用
+class RetainCyclePerson {
     let name: String
     var apartment: Apartment?
     
@@ -40,10 +40,10 @@ class Person {
     }
 }
 
-/// Apartment 類別 - 持有 Person 的 strong 引用（會造成循環引用）
+/// Apartment 類別 - 持有 RetainCyclePerson 的 strong 引用（會造成循環引用）
 class Apartment {
     let unit: String
-    var tenant: Person?  // ⚠️ Strong reference - 會造成循環引用！
+    var tenant: RetainCyclePerson?  // ⚠️ Strong reference - 會造成循環引用！
     
     init(unit: String) {
         self.unit = unit
@@ -157,7 +157,7 @@ class StrongWeakDemoViewController: UIViewController {
     private let contentStackView = UIStackView()
     
     // Demo objects - 用於保持引用以便觀察記憶體行為
-    private var retainCycleObjects: (person: Person?, apartment: Apartment?) = (nil, nil)
+    private var retainCycleObjects: (person: RetainCyclePerson?, apartment: Apartment?) = (nil, nil)
     private var goodObjects: (person: BetterPerson?, apartment: BetterApartment?) = (nil, nil)
     private var networkManager: NetworkManager?
     private var dataSource: DataSource?
@@ -165,10 +165,10 @@ class StrongWeakDemoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Strong vs Weak Memory Demo Started")
         print("請查看控制台輸出以觀察記憶體行為")
-        print("=".repeating(60) + "\n")
+        print(String(repeating: "=", count: 60) + "\n")
     }
     
     private func setupUI() {
@@ -306,9 +306,9 @@ class StrongWeakDemoViewController: UIViewController {
     // MARK: - Demo Methods
     
     @objc private func demo1BasicStrongWeak() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 1: 基本 Strong vs Weak 引用")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         // Strong reference example
         print("\n📌 Strong Reference 範例:")
@@ -341,12 +341,12 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo2CreateRetainCycle() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 2: 創建循環引用 (Retain Cycle) ⚠️")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         // Create person and apartment with mutual strong references
-        let john = Person(name: "John")
+        let john = RetainCyclePerson(name: "John")
         let unit4A = Apartment(unit: "4A")
         
         // Create retain cycle
@@ -354,8 +354,8 @@ class StrongWeakDemoViewController: UIViewController {
         unit4A.tenant = john
         
         print("\n⚠️ 循環引用已創建:")
-        print("John (Person) → strong → Apartment 4A")
-        print("Apartment 4A → strong → John (Person)")
+        print("John (RetainCyclePerson) → strong → Apartment 4A")
+        print("Apartment 4A → strong → John (RetainCyclePerson)")
         print("兩個物件互相持有，形成循環引用")
         
         // Store references
@@ -368,9 +368,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo2ReleaseRetainCycle() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 2b: 嘗試釋放循環引用的物件")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         print("\n嘗試將引用設為 nil...")
         retainCycleObjects = (nil, nil)
@@ -387,9 +387,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo3AvoidRetainCycle() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 3: 使用 Weak 解決循環引用 ✅")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         // Create person and apartment with weak reference
         var john: BetterPerson? = BetterPerson(name: "John")
@@ -430,9 +430,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo4ClosureRetainCycle() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 4a: 閉包循環引用問題 ⚠️")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         var manager: NetworkManager? = NetworkManager(url: "https://api.example.com")
         manager?.fetchDataWithRetainCycle()
@@ -457,9 +457,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo4ClosureCorrect() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 4b: 使用 [weak self] 解決閉包循環引用 ✅")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         // Clean up previous manager first
         print("先清理之前的 NetworkManager...")
@@ -486,9 +486,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func demo5DelegatePattern() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("Demo 5: Delegate 模式與 Weak 引用")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         dataSource = DataSource()
         dataSource?.delegate = self
@@ -507,9 +507,9 @@ class StrongWeakDemoViewController: UIViewController {
     }
     
     @objc private func cleanupAllObjects() {
-        print("\n" + "=".repeating(60))
+        print("\n" + String(repeating: "=", count: 60))
         print("清理所有物件")
-        print("=".repeating(60))
+        print(String(repeating: "=", count: 60))
         
         print("\n釋放所有引用...")
         retainCycleObjects = (nil, nil)

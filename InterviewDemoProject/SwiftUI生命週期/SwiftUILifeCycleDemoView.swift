@@ -271,19 +271,7 @@ struct SwiftUILifeCycleDemoView: View {
                 .padding(.vertical)
             }
             .navigationTitle("SwiftUI 生命週期")
-            .background(
-                NavigationLink(
-                    destination: destinationView,
-                    tag: true,
-                    selection: $selectedDemo.map(
-                        get: { _ in true },
-                        set: { if !$0 { selectedDemo = nil } }
-                    )
-                ) {
-                    EmptyView()
-                }
-                .hidden()
-            )
+
         }
     }
     
