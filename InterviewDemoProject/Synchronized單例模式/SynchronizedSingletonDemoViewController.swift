@@ -552,3 +552,4 @@ class SynchronizedSingletonDemoViewController: UIViewController {
  └─────────────────────────────────────────────────────────────────────────────┘
  */
 
+

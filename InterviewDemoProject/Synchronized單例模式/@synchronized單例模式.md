@@ -158,3 +158,4 @@ class MySingleton {
 - **Swift**：直接使用 `static let shared = MyClass()` 即可
 - **關鍵原理**：確保同一時間只有一個線程能執行實例化代碼
 
+
